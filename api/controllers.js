@@ -12,12 +12,8 @@ const controllers = {
     res.json({ api: "courses!" });
   },
 
-  getCourses: async (req, res) => {
-    try {
-      res.send(courses);
-    } catch (error) {
-      console.log(err);
-    }
+  getCourses: (req, res) => {
+    res.send(courses);
   },
 
   postCourse: async (req, res) => {
@@ -28,9 +24,9 @@ const controllers = {
       };
       courses.push(course);
       res.send(course);
-    } catch (error) {
-      const { error } = validateCourse(req.body); //result.error
-      if (error) return res.status(400).send(error.details[0].message);
+    } catch (err) {
+      // const { error } = validateCourse(req.body); //result.error
+      if (err) return res.status(400).send(err.details[0].message);
     }
   },
   getCourse: async (req, res) => {
@@ -52,7 +48,7 @@ const controllers = {
       course.name = req.body.name;
       //return the updated course
       res.send(course);
-    } catch (error) {
+    } catch (err) {
       // look up the course
       //if not return 404
       const course = courses.find((c) => c.id === parseInt(req.params.id));
@@ -61,11 +57,11 @@ const controllers = {
           .status(404)
           .send("The course with the given ID was not found");
       res.send(course);
-      console.error(error);
+      console.error(err);
       //validate
       //if invalid, return 400
-      const { error } = validateCourse(req.body); //result.error
-      if (error) return res.status(400).send(error.details[0].message);
+      // const { error } = validateCourse(req.body); //result.error
+      if (err) return res.status(400).send(err.details[0].message);
     }
     console.error(error);
   },
