@@ -4,6 +4,11 @@ const fs = require("fs");
 const path = require("path");
 const Joi = require("joi");
 
+const readFilePromise = util.promisify(fs.readFile);
+const writeFilePromise = util.promisify(fs.writeFile);
+const contents = await readFilePromise(DATA_DIR, "utf8");
+const courses = JSON.parse(contents);
+
 const config = require("../config");
 const DATA_DIR = path.join(__dirname, "/..", config.DATA_DIR, "/courses.json");
 
